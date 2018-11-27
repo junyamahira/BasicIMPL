@@ -9,16 +9,16 @@ public class LexicalUnit {
 	public LexicalUnit(LexicalType this_type) {
 	    type = this_type;
 	}
-	
+
 	public LexicalUnit(LexicalType this_type, Value this_value) {
 		type = this_type;
 		value = this_value;
 	}
-	
+
 	public Value getValue() {
 		return value;
 	}
-	
+
 	public LexicalType getType() {
 		return type;
 	}
@@ -30,9 +30,9 @@ public class LexicalUnit {
 	    case NAME:
 	    	return "NAME:\t" + value.getSValue();
 	    case DOUBLEVAL:
-	    	return "DOUBLEVAL:\t" + value.getSValue();
+	    	return "DOUBLEVAL:\t" + value.getDValue();
 	    case INTVAL:
-	    	return "INTVAL:\t" + value.getSValue();
+	    	return "INTVAL:\t" + value.getIValue();
 	    case IF:
             return ("IF");
 	    case THEN:
@@ -97,6 +97,8 @@ public class LexicalUnit {
 	    	return ("NE");
 	    case ENDIF:
 	    	return ("ENDIF");
+	    case DO:
+	    	return ("DO");
 	    }
 	    return "";
 	}

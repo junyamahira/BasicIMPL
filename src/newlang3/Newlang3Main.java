@@ -1,41 +1,37 @@
 package newlang3;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class Newlang3Main {
 	public static void main(String[] args) {
-		String fname = "test1.bas";
+		LexicalUnit lu;
+		String fname = "test2.bas";
+		LexicalAnalyzer la;
+		InputStream is = null;
+
 		if (args.length > 0) {
 			fname = args[0];
 		}
-//		File f1 = new File(fname);
-//
-//		Scanner scan;
-//		try {
-//			scan = new Scanner(f1);
-//			String str;
-//			while (scan.hasNextLine()) {
-//				str = scan.nextLine();
-//				for (int i = 0; i < str.length(); i++) {
-//					System.out.print(str.charAt(i));
-//				}
-//				System.out.println();
-//			}
-//			scan.close();
-//
-//		} catch (FileNotFoundException e) {
-//			System.out.println(fname + "not found");
-//			System.exit(-1);
-//		}
 
-		LexicalAnalyzer la = new LexicalAnalyzerImpl(fname);
-        while(true){
-        	try{
-        		LexicalUnit lu = la.get();
-        		System.out.println(lu);
-        		if(lu.getType()==LexicalType.EOF)break;
-        	}catch(Exception e){
-        		e.printStackTrace();
-        		break;
-        	}
-        }
+		try {
+			is = new FileInputStream(fname);
+		} catch (FileNotFoundException e1) {
+			System.out.println(fname + ": not found");
+			System.exit(-1);
+		}
+
+		la = new LexicalAnalyzerImpl(is);
+		while (true) {
+			try {
+				lu = la.get();
+				System.out.println(lu.toString());
+				if (lu.getType() == LexicalType.EOF)break;
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+		}
 	}
 }

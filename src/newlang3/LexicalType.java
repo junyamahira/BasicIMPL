@@ -1,10 +1,10 @@
 package newlang3;
 
 public enum LexicalType {
-	LITERAL,	// •¶Žš—ñ’è”@i—áF@g•¶Žš—ñhj
-	INTVAL,		// ®”’è”	i—áF@‚Rj
-	DOUBLEVAL,	// ¬”“_’è”	i—áF@‚PD‚Qj
-	NAME,		// •Ï”		i—áF@ij
+	LITERAL,	// æ–‡å­—åˆ—å®šæ•°(ä¾‹:"æ–‡å­—")
+	INTVAL,		// æ•´æ•°å®šæ•°(ä¾‹: 2)
+	DOUBLEVAL,	// å°æ•°ç‚¹å®šæ•°(ä¾‹: 1.2)
+	NAME,		// å¤‰æ•°(i)
 	IF,			// IF
 	THEN,		// THEN
 	ELSE,		// ELSE
@@ -23,7 +23,7 @@ public enum LexicalType {
 	DIM,		// DIM
 	AS,			// AS
 	END,		// END
-	NL,			// ‰üs
+	NL,			// æ”¹è¡Œ
 	DOT,		// .
 	WHILE,		// WHILE
 	DO,			// DO

@@ -64,10 +64,8 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 			ci = pbr.read();
 		}while(ci == ' ' || ci == '\t');
 
-		if (!pbr.ready()) {
-			return new LexicalUnit(LexicalType.EOF);
-		}
-		pbr.unread(ci);
+        if (ci == -1) return new LexicalUnit(LexicalType.EOF);
+        else pbr.unread(ci);
 
 		if((ci >= 'a' && ci <= 'z') || (ci >= 'A' && ci <= 'Z')) {
 			return getString();
@@ -128,31 +126,33 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 			}else {
 				return RESERVED_WORDS.get(cursor);
 			}
+		}else if (ch == '\r') {
+			ci = pbr.read();
+			ch = (char)ci;
+			if (RESERVED_WORDS.containsKey(cursor+ch)) return RESERVED_WORDS.get(cursor+ch);
 		}
 
 		return null;
 	}
 
 
-	private LexicalUnit getLiteral() throws IOException {
+	private LexicalUnit getLiteral() throws Exception {
 		String cursor = "";
-		boolean isBigin = false;
+        int ci = pbr.read();   // "を読み飛ばす
 
-		while(true) {
-			int ci = pbr.read();
-			char c = (char)ci;
-			if (!isBigin && c == '\"') {
-				isBigin = true;
-				continue;
-			}
-			if (isBigin) {
-				if(c == '\"') {
-					break;
-				}
-				cursor += c;
-			}
-		}
-		return new LexicalUnit(LexicalType.LITERAL, new ValueImpl(cursor, ValueType.STRING));
+        while (true) {
+            ci = pbr.read();
+            if (ci < 0) {
+                throw new Exception("Literalの解析中にファイル終端に達しました");
+            } else if (ci == '\n') {
+                throw new Exception("Literalの解析中に改行が行われました");
+            } else if (ci == '\"') {
+                break;  //読み飛ばし、return処理へ
+            } else {
+                cursor += (char) ci;
+            }
+        }
+        return new LexicalUnit(LexicalType.LITERAL, new ValueImpl(cursor, ValueType.STRING));
 	}
 
 
@@ -160,7 +160,7 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 		String cursor = "";
 		boolean isFloat = false;
 		int ci;
-		int ch;
+		char ch;
 
 		while(true) {
 			ci = pbr.read();

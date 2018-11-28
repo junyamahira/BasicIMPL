@@ -36,7 +36,8 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 		RESERVED_WORDS.put(">=", new LexicalUnit(LexicalType.GE));
 		RESERVED_WORDS.put("=>", new LexicalUnit(LexicalType.GE));
 		RESERVED_WORDS.put("<>", new LexicalUnit(LexicalType.NE));
-		RESERVED_WORDS.put("\r\n", new LexicalUnit(LexicalType.NL));
+		RESERVED_WORDS.put("\n", new LexicalUnit(LexicalType.NL));
+		RESERVED_WORDS.put("\r", new LexicalUnit(LexicalType.NL));
 		RESERVED_WORDS.put(".", new LexicalUnit(LexicalType.DOT));
 		RESERVED_WORDS.put("+", new LexicalUnit(LexicalType.ADD));
 		RESERVED_WORDS.put("-", new LexicalUnit(LexicalType.SUB));
@@ -73,9 +74,16 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 			return getNum();
 		}else if(ci == '\"') {
 			return getLiteral();
-		}else {
+		}else if (RESERVED_WORDS.containsKey(String.valueOf((char) ci))) {
 			return getSymbol();
+		} else {
+			ci = pbr.read();
+			if (!(pbr.ready())) return new LexicalUnit(LexicalType.EOF);
+			pbr.unread(ci);
+	        //それ以外の文字。マルチバイトとか変な記号とか来たら返す
+	        throw new Exception("使用できない文字が含まれています");
 		}
+		
 	}
 
 	private LexicalUnit getString() throws Exception{
@@ -123,15 +131,14 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 					pbr.unread(ci);
 					return RESERVED_WORDS.get(cursor);
 				}
+			}else if (ch == '\r') {
+				ci = pbr.read();
+				ch = (char)ci;
+				if (RESERVED_WORDS.containsKey(cursor)) return RESERVED_WORDS.get(cursor);
 			}else {
 				return RESERVED_WORDS.get(cursor);
 			}
-		}else if (ch == '\r') {
-			ci = pbr.read();
-			ch = (char)ci;
-			if (RESERVED_WORDS.containsKey(cursor+ch)) return RESERVED_WORDS.get(cursor+ch);
 		}
-
 		return null;
 	}
 
@@ -142,11 +149,7 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 
         while (true) {
             ci = pbr.read();
-            if (ci < 0) {
-                throw new Exception("Literalの解析中にファイル終端に達しました");
-            } else if (ci == '\n') {
-                throw new Exception("Literalの解析中に改行が行われました");
-            } else if (ci == '\"') {
+            if (ci == '\"') {
                 break;  //読み飛ばし、return処理へ
             } else {
                 cursor += (char) ci;

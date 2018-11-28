@@ -79,11 +79,9 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 		} else {
 			ci = pbr.read();
 			if (!(pbr.ready())) return new LexicalUnit(LexicalType.EOF);
-			pbr.unread(ci);
-	        //それ以外の文字。マルチバイトとか変な記号とか来たら返す
-	        throw new Exception("使用できない文字が含まれています");
+	        throw new Exception("文字読み込みエラー");
 		}
-		
+
 	}
 
 	private LexicalUnit getString() throws Exception{
@@ -107,9 +105,7 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 			break;
 		}
 
-		if(RESERVED_WORDS.containsKey(cursor)) {
-			return RESERVED_WORDS.get(cursor);
-		}
+		if(RESERVED_WORDS.containsKey(cursor)) return RESERVED_WORDS.get(cursor);
 		return new LexicalUnit(LexicalType.NAME, new ValueImpl(cursor, ValueType.STRING));
 	}
 
@@ -145,12 +141,12 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 
 	private LexicalUnit getLiteral() throws Exception {
 		String cursor = "";
-        int ci = pbr.read();   // "を読み飛ばす
+        int ci = pbr.read();
 
         while (true) {
             ci = pbr.read();
             if (ci == '\"') {
-                break;  //読み飛ばし、return処理へ
+                break;
             } else {
                 cursor += (char) ci;
             }
@@ -181,10 +177,7 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 			break;
 		}
 
-		if(isFloat) {
-			return new LexicalUnit(LexicalType.DOUBLEVAL, new ValueImpl(cursor, ValueType.DOUBLE));
-		}
-
+		if(isFloat) return new LexicalUnit(LexicalType.DOUBLEVAL, new ValueImpl(cursor, ValueType.DOUBLE));
 		return new LexicalUnit(LexicalType.INTVAL, new ValueImpl(cursor, ValueType.INTEGER));
 	}
 

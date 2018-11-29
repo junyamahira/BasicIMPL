@@ -10,8 +10,7 @@ import java.util.Map;
 public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 
 	PushbackReader pbr;
-	private static final Map<String,LexicalUnit> RESERVED_WORDS = new HashMap<>();
-
+	private static final Map<String, LexicalUnit> RESERVED_WORDS = new HashMap<>();
 
 	static {
 		RESERVED_WORDS.put("IF", new LexicalUnit(LexicalType.IF));
@@ -56,43 +55,45 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 		pbr = new PushbackReader(new InputStreamReader(is));
 	}
 
-
 	@Override
 	public LexicalUnit get() throws Exception {
 		int ci;
 
 		do {
 			ci = pbr.read();
-		}while(ci == ' ' || ci == '\t');
+		} while (ci == ' ' || ci == '\t');
 
-        if (ci == -1) return new LexicalUnit(LexicalType.EOF);
-        else pbr.unread(ci);
+		if (ci == -1)
+			return new LexicalUnit(LexicalType.EOF);
+		else
+			pbr.unread(ci);
 
-		if((ci >= 'a' && ci <= 'z') || (ci >= 'A' && ci <= 'Z')) {
+		if ((ci >= 'a' && ci <= 'z') || (ci >= 'A' && ci <= 'Z')) {
 			return getString();
-		}else if(ci >= '0' && ci <= '9') {
+		} else if (ci >= '0' && ci <= '9') {
 			return getNum();
-		}else if(ci == '\"') {
+		} else if (ci == '\"') {
 			return getLiteral();
-		}else if (RESERVED_WORDS.containsKey(String.valueOf((char) ci))) {
+		} else if (RESERVED_WORDS.containsKey(String.valueOf((char) ci))) {
 			return getSymbol();
 		} else {
 			ci = pbr.read();
-			if (!(pbr.ready())) return new LexicalUnit(LexicalType.EOF);
-	        throw new Exception("文字読み込みエラー");
+			if (!(pbr.ready()))
+				return new LexicalUnit(LexicalType.EOF);
+			throw new Exception("文字読み込みエラー");
 		}
 
 	}
 
-	private LexicalUnit getString() throws Exception{
+	private LexicalUnit getString() throws Exception {
 		String cursor = "";
 		int ci;
 		char ch;
 
 		while (true) {
 			ci = pbr.read();
-			ch = (char)ci;
-			if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+			ch = (char) ci;
+			if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
 				cursor += ch;
 				continue;
 			}
@@ -105,7 +106,8 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 			break;
 		}
 
-		if(RESERVED_WORDS.containsKey(cursor)) return RESERVED_WORDS.get(cursor);
+		if (RESERVED_WORDS.containsKey(cursor))
+			return RESERVED_WORDS.get(cursor);
 		return new LexicalUnit(LexicalType.NAME, new ValueImpl(cursor, ValueType.STRING));
 	}
 
@@ -115,45 +117,44 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 		char ch;
 
 		ci = pbr.read();
-		ch = (char)ci;
+		ch = (char) ci;
 		cursor += ch;
 
-		if(RESERVED_WORDS.containsKey(cursor)){
+		if (RESERVED_WORDS.containsKey(cursor)) {
 			if (ch == '<' || ch == '>' || ch == '=') {
 				ci = pbr.read();
-				ch = (char)ci;
-				if (RESERVED_WORDS.containsKey(cursor+ch))return RESERVED_WORDS.get(cursor+ch);
-				else{
+				ch = (char) ci;
+				if (RESERVED_WORDS.containsKey(cursor + ch))
+					return RESERVED_WORDS.get(cursor + ch);
+				else {
 					pbr.unread(ci);
 					return RESERVED_WORDS.get(cursor);
 				}
-			}else if (ch == '\r') {
+			} else if (ch == '\r') {
 				ci = pbr.read();
-				ch = (char)ci;
-				if (RESERVED_WORDS.containsKey(cursor)) return RESERVED_WORDS.get(cursor);
-			}else {
+				ch = (char) ci;
+				if (RESERVED_WORDS.containsKey(cursor))
+					return RESERVED_WORDS.get(cursor);
+			} else
 				return RESERVED_WORDS.get(cursor);
-			}
 		}
 		return null;
 	}
 
-
 	private LexicalUnit getLiteral() throws Exception {
 		String cursor = "";
-        int ci = pbr.read();
+		int ci = pbr.read();
 
-        while (true) {
-            ci = pbr.read();
-            if (ci == '\"') {
-                break;
-            } else {
-                cursor += (char) ci;
-            }
-        }
-        return new LexicalUnit(LexicalType.LITERAL, new ValueImpl(cursor, ValueType.STRING));
+		while (true) {
+			ci = pbr.read();
+			if (ci == '\"') {
+				break;
+			} else {
+				cursor += (char) ci;
+			}
+		}
+		return new LexicalUnit(LexicalType.LITERAL, new ValueImpl(cursor, ValueType.STRING));
 	}
-
 
 	private LexicalUnit getNum() throws IOException {
 		String cursor = "";
@@ -161,14 +162,14 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 		int ci;
 		char ch;
 
-		while(true) {
+		while (true) {
 			ci = pbr.read();
-			ch = (char)ci;
+			ch = (char) ci;
 			if (ch >= '0' && ch <= '9') {
 				cursor += ch;
 				continue;
 			}
-			if((ch == '.') && !isFloat) {
+			if ((ch == '.') && !isFloat) {
 				cursor += ch;
 				isFloat = true;
 				continue;
@@ -177,10 +178,10 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 			break;
 		}
 
-		if(isFloat) return new LexicalUnit(LexicalType.DOUBLEVAL, new ValueImpl(cursor, ValueType.DOUBLE));
+		if (isFloat)
+			return new LexicalUnit(LexicalType.DOUBLEVAL, new ValueImpl(cursor, ValueType.DOUBLE));
 		return new LexicalUnit(LexicalType.INTVAL, new ValueImpl(cursor, ValueType.INTEGER));
 	}
-
 
 	@Override
 	public boolean expect(LexicalType type) throws Exception {

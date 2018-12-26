@@ -1,22 +1,30 @@
 package newlang4;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.omg.CORBA.Environment;
-
-import newlang3.LexicalType;
-
 public class StmtListNode extends Node{
-	Lexical<Node> child = new ArrayList<Node>();
-	static Set<LexicalType> first = new HashSet<LexicalType>(Arrays.asList(LexicalType.IF, LexicalType.DO, LexicalType.FOR, LexicalType.END));
+	List<Node> child = new ArrayList<Node>();
 
-	public StmtListNode(Environment e) {
-		super(e);
+	static Set<LexicalType> first =
+			new HashSet<LexicalType>(Arrays.asList(LexicalType.IF,
+					LexicalType.DO, LexicalType.WHILE, LexicalType.NL,
+					LexicalType.NAME, LexicalType.FOR, LexicalType.END));
+
+	public StmtListNode(Environment env) {
+		super(env);
+		type = NodeType.STMT_LIST;
 	}
 
-	static boolean isMatch(LexicalType t){
-		return first.contains(e)
+	public static boolean isMatch(LexicalType type){
+		return first.contains(type);
+	}
+
+	public static Node getHandler(Environment env) {
+		// TODO 自動生成されたメソッド・スタブ
+		return new StmtListNode(env);
 	}
 }

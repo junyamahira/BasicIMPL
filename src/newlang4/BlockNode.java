@@ -1,20 +1,26 @@
 package newlang4;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import newlang3.LexicalType;
-import newlang3.LexicalUnit;
 
-public class BlockNode {
+public class BlockNode extends Node {
 	static Set<LexicalUnit> first =
-			new HashSet(Araays.atList(LexicalType.DO, LexicalType.IF));
+			new HashSet(Arrays.asList(LexicalType.DO, 
+					LexicalType.WHILE, LexicalType.IF));
 
+	
 	static boolean isMatch (LexicalType type) {
 		return first.contains(type);
 	}
-
+	
 	static Node getHandler (LexicalType type){
 		return null;
+	}
+	
+	public BlockNode(Environment env) {
+		super(env);
+		type = NodeType.BLOCK;
 	}
 }

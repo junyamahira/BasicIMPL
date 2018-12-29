@@ -29,6 +29,6 @@ public class ProgramNode extends Node {
 
 	@Override
 	public String toString() {
-		return "program";
+		return "program node";
 	}
 }

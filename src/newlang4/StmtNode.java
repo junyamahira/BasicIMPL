@@ -7,7 +7,7 @@ public class StmtNode extends Node{
 	Node body;
 
 	private StmtNode(Environment env){
-		super.env = env;
+		super(env);
 		super.type = NodeType.STMT;
 	}
 

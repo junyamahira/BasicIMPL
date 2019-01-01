@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PushbackReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 
 	PushbackReader pbr;
 	private static final Map<String, LexicalUnit> RESERVED_WORDS = new HashMap<>();
+
+	private List<LexicalUnit> lexicalUnits = new ArrayList<>();
 
 	static {
 		RESERVED_WORDS.put("IF", new LexicalUnit(LexicalType.IF));
@@ -183,12 +187,28 @@ public class LexicalAnalyzerImpl implements LexicalAnalyzer {
 
 	@Override
 	public boolean expect(LexicalType type) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
+		return type == peep(1).getType();
 	}
 
 	@Override
 	public void unget(LexicalUnit token) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+		lexicalUnits.add(token);
+	}
+
+	public LexicalUnit peep(int n) throws Exception{
+		List<LexicalUnit> tmp = new ArrayList<>();
+
+		for (int i = 0; i < n -1; i++) {
+			tmp.add(get());
+		}
+		LexicalUnit lu = get();
+		unget(lu);
+
+        while(!tmp.isEmpty()) {
+            unget(tmp.get(tmp.size() - 1));
+            tmp.remove(tmp.size() - 1);
+        }
+
+        return lu;
 	}
 }

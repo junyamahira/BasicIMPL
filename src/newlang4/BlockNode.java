@@ -14,8 +14,12 @@ public class BlockNode extends Node {
 		return first.contains(type);
 	}
 
-	static Node getHandler (LexicalType type){
-		return null;
+	static Node getHandler (Environment env) throws Exception{
+		LexicalType inType = env.getInput().peep(1).getType();
+
+		if (IfBlockNode.isMatch(inType)) return IfBlockNode.getHandler(env);
+		else if (LoopNode.isMatch(inType)) return LoopNode.getHandler(env);
+		else throw new Exception("blockNodeで不適切な型検出:" + env.getInput().peep(1).getType());
 	}
 
 	public BlockNode(Environment env) {

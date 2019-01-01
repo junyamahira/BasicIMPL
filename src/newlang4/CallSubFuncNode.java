@@ -26,8 +26,26 @@ public class CallSubFuncNode extends Node {
 
     @Override
     public boolean Parse() throws Exception {
-    	// TODO 自動生成されたメソッド・スタブ
-    	return super.Parse();
+    	boolean isBracket = false;
+    	LexicalType inType = env.getInput().peep(1).getType();
+    	funcName = env.getInput().get().getValue().getSValue();
+
+    	if (env.getInput().expect(LexicalType.LP)){
+    		isBracket = true;
+    		env.getInput().get();
+    	}
+
+    	if (ExprListNode.isMatch(inType)) {
+			arguments = ExprListNode.getHandler(env);
+			arguments.Parse();
+		}
+
+    	if (isBracket && env.getInput().expect(LexicalType.RP))
+    		throw new Exception("()が閉じられていません");
+    	else if (isBracket && env.getInput().expect(LexicalType.RP))
+    		env.getInput().get();
+
+    	return true;
     }
 
     @Override
@@ -40,4 +58,3 @@ public class CallSubFuncNode extends Node {
     	// TODO 自動生成されたメソッド・スタブ
     	return super.getValue();
     }
-}

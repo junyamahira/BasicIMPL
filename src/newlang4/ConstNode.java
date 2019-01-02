@@ -27,5 +27,45 @@ public class ConstNode extends Node {
 	        }
 	    }
 
+	    public static boolean isMatch(LexicalType type) {
+	        return FIRST.contains(type);
+	    }
+
+	    public static Node getHandler(Value v) {
+	        return new ConstNode(v);
+	    }
+
+	    @Override
+	    public boolean Parse() throws Exception {
+	    	return false;
+	    }
+
+	    @Override
+	    public Value getValue() throws Exception {
+	    	return value;
+	    }
+
+	    @Override
+	    public String toString() {
+	        String valueStr = "const: ";
+	        switch (type) {
+	            case INT_CONSTANT:
+	                valueStr += value.getIValue();
+	                break;
+	            case DOUBLE_CONSTANT:
+	                valueStr += value.getDValue();
+	                break;
+	            case STRING_CONSTANT:
+	                valueStr += value.getSValue();
+	                break;
+	            default :
+	                valueStr += "???";
+	                break;
+	        }
+	    	return valueStr;
+	    }
+
+
+
 
 }

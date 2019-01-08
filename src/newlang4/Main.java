@@ -37,7 +37,7 @@ public class Main {
 		program = ProgramNode.getHandler(env);
 		if (program != null && program.Parse()) {
 			System.out.println(program);
-			System.out.println("value = " + program.getValue());
+			//System.out.println("value = " + program.getValue());
 		} else
 			System.out.println("syntax error");
 	}

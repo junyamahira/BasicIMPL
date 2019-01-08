@@ -42,7 +42,7 @@ public class CondNode extends Node {
 
         if (ExprNode.isMatch(env.getInput().peep().getType())) {
             right = ExprNode.getHandler(env);
-            right.parse();
+            right.Parse();
         } else throw new Exception("Cond:右辺処理中にエラー");
 
         return true;

@@ -14,6 +14,7 @@ public class ProgramNode extends Node {
 					LexicalType.FOR, LexicalType.END));
 
     List<Node> child = new ArrayList<Node>();
+
 	public ProgramNode(Environment env) {
 		super(env);
 		type = NodeType.PROGRAM;

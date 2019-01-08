@@ -3,8 +3,6 @@ package newlang5;
 public class Node {
     NodeType type;
     Environment env;
-    
-    public Node next;
 
     /** Creates a new instance of Node */
     public Node() {
@@ -15,22 +13,22 @@ public class Node {
     public Node(Environment my_env) {
         env = my_env;
     }
-    
+
     public NodeType getType() {
         return type;
     }
-    
-    public boolean Parse() {
+
+    public boolean Parse() throws Exception {
         return true;
     }
-    
-    public Value getValue() {
+
+    public Value getValue() throws Exception {
         return null;
     }
- 
+
     public String toString() {
     	if (type == NodeType.END) return "END";
-    	else return "Node";        
+    	else return "Node";
     }
 
 }

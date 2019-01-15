@@ -11,7 +11,7 @@ public class Function {
     public Function() {
     }
 
-    public Value invoke(ExprList arg) {
+    public Value invoke(ExprListNode arg) {
 
     	for (int i = 0; i < arg.size(); i++) {
 			Value val = arg.getElemnt(i);

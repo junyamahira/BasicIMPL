@@ -51,7 +51,7 @@ public class IfBlockNode extends Node {
 
 			if (CondNode.isMatch(env.getInput().peep(1).getType())) {
 				condition = CondNode.getHandler(env);
-				condition.parse();
+				condition.Parse();
 			} else throw new Exception("条件式が見当たりません");
 
 			if (env.getInput().get().getType() != LexicalType.THEN)

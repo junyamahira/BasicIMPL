@@ -30,5 +30,8 @@ public class Node {
     	if (type == NodeType.END) return "END";
     	else return "Node";
     }
+	public Value getValue(int index) throws Exception {
+		return null;
+	}
 
 }

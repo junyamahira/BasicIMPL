@@ -11,7 +11,8 @@ public class ConstNode extends Node {
 	    				LexicalType.LITERAL, LexicalType.SUB));
 
 	    private ConstNode(Value v) {
-	        value = v;
+	    	//super(env);
+	        this.value = v;
 	        switch (v.getType()) {
 	            case INTEGER:
 	                type = NodeType.INT_CONSTANT;

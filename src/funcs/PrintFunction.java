@@ -1,7 +1,7 @@
 package funcs;
 
 import interpreter.Value;
-import newlang5.node.ExprListNode;
+import interpreter.node.ExprListNode;
 
 public class PrintFunction extends Function {
 

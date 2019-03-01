@@ -2,8 +2,8 @@ package interpreter;
 
 import java.io.FileInputStream;
 
-import newlang5.node.Node;
-import newlang5.node.ProgramNode;
+import interpreter.node.Node;
+import interpreter.node.ProgramNode;
 
 public class Main {
 

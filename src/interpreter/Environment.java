@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import funcs.Function;
 import funcs.PrintFunction;
-import newlang5.node.VariableNode;
+import interpreter.node.VariableNode;
 
 public class Environment {
 

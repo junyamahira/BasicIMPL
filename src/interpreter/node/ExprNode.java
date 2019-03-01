@@ -1,4 +1,4 @@
-package newlang5.node;
+package interpreter.node;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;

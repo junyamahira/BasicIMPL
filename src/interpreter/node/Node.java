@@ -1,4 +1,4 @@
-package newlang5.node;
+package interpreter.node;
 
 import interpreter.Environment;
 import interpreter.LexicalType;

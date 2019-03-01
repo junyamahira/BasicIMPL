@@ -1,4 +1,4 @@
-package newlang5.node;
+package interpreter.node;
 
 import java.util.Arrays;
 import java.util.HashSet;

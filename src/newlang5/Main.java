@@ -2,6 +2,9 @@ package newlang5;
 
 import java.io.FileInputStream;
 
+import newlang5.node.Node;
+import newlang5.node.ProgramNode;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -11,9 +14,9 @@ public class Main {
         Environment env;
         Node program;
 
-        System.out.println("==basic Interpreter==");
+        System.out.println("-basic Interpreter strat-");
         try {
-            fin = new FileInputStream("test2.bas");
+            fin = new FileInputStream("test1.bas");
         } catch (Exception e) {
             System.out.println("file not found");
             System.exit(-1);
@@ -23,16 +26,16 @@ public class Main {
         first = lex.get();
         lex.unget(first);
 
-        program = ProgramNode.getHandler(env);
+        program = ProgramNode.getHandler(env.getInput().peep().getType(), env);
 
-        if (program != null && program.Parse()) {
+        if (program != null && program.parse()) {
             //System.out.println(program);
         } else {
             System.out.println("syntax error");
         }
         System.out.println("execute");
         program.getValue();
-        System.out.println("end");
+        System.out.println("-basic Interpreter end-");
     }
 
 }

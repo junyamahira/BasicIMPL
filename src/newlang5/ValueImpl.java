@@ -1,9 +1,16 @@
 package newlang5;
 
+
 public class ValueImpl implements Value {
 
     private ValueType type;
     private String value;
+
+    //過去の残骸
+	public ValueImpl(String src, ValueType targetType) {
+		this.type = targetType;
+		value = src;
+	}
 
     public ValueImpl(String s) {
         type = ValueType.STRING;

@@ -2,6 +2,10 @@ package newlang5;
 
 import java.util.HashMap;
 
+import funcs.Function;
+import funcs.PrintFunction;
+import newlang5.node.VariableNode;
+
 public class Environment {
 
     LexicalAnalyzer input;

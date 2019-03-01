@@ -103,8 +103,6 @@ public class LexicalUnit {
                 return ("NE");
             case ENDIF:
                 return ("ENDIF");
-            case MOD:
-                return ("MOD");
         }
         return "";
     }

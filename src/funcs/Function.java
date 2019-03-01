@@ -1,6 +1,6 @@
 package funcs;
 
-import newlang5.Value;
+import interpreter.Value;
 import newlang5.node.ExprListNode;
 
 public class Function {

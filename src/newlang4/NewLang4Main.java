@@ -3,7 +3,7 @@ package newlang4;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Main {
+public class NewLang4Main {
 
 	/**
 	 * @param args
@@ -17,7 +17,7 @@ public class Main {
 
 		System.out.println("basic parser");
 
-		String fname = "test2.bas";
+		String fname = "test1.bas";
 		if (args.length > 0) {
 			fname = args[0];
 		}

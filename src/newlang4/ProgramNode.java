@@ -1,9 +1,7 @@
 package newlang4;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ProgramNode extends Node {
@@ -13,7 +11,8 @@ public class ProgramNode extends Node {
 					LexicalType.WHILE, LexicalType.DO, LexicalType.NAME,
 					LexicalType.FOR, LexicalType.END));
 
-    List<Node> child = new ArrayList<Node>();
+	//???とりま放置
+    //List<Node> child = new ArrayList<Node>();
 
 	public ProgramNode(Environment env) {
 		super(env);
@@ -25,11 +24,17 @@ public class ProgramNode extends Node {
 	}
 
 	public static boolean isMatch(LexicalType type) {
-		return true;
+		return first.contains(type);
 	}
 
 	@Override
 	public String toString() {
 		return "program node";
+	}
+
+	@Override
+	public Value getValue() throws Exception {
+		// TODO 自動生成されたメソッド・スタブ
+		throw new Exception("Program:getValueはNG");
 	}
 }

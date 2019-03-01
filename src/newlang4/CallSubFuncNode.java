@@ -58,3 +58,4 @@ public class CallSubFuncNode extends Node {
     	// TODO 自動生成されたメソッド・スタブ
     	return super.getValue();
     }
+}

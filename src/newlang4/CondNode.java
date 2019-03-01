@@ -40,7 +40,7 @@ public class CondNode extends Node {
 		}else  throw new Exception("Cond:不適切な記号");
 
 
-        if (ExprNode.isMatch(env.getInput().peep().getType())) {
+        if (ExprNode.isMatch(env.getInput().peep(1).getType())) {
             right = ExprNode.getHandler(env);
             right.Parse();
         } else throw new Exception("Cond:右辺処理中にエラー");

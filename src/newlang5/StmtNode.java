@@ -1,54 +1,60 @@
 package newlang5;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class StmtNode extends Node{
-	Node body;
+
+	private final static Set<LexicalType> FIRST =
+			new HashSet<LexicalType>(Arrays.asList(LexicalType.NAME,
+					LexicalType.FOR, LexicalType.END));
 
 	private StmtNode(Environment env){
 		super(env);
 		super.type = NodeType.STMT;
 	}
 
-
-	private static Set<LexicalType> firstSet = new HashSet<LexicalType>();
-	static {
-		firstSet.add(LexicalType.NAME);
-		firstSet.add(LexicalType.FOR);
-		firstSet.add(LexicalType.END);
+	public static boolean isMatch(LexicalType type) {
+		return FIRST.contains(type);
 	}
 
-	public static Node isMatch(Environment env, LexicalUnit first) {
-		if(!firstSet.contains(first.type)){
-			return null;
-		}
+	static Node getHandler(Environment env) throws Exception{
+		System.out.println("stmt");
 
-		return new StmtNode(env);
+		switch (env.getInput().peep(1).getType()) {
+        case NAME:
+            if (env.getInput().peep(2).getType() == LexicalType.EQ) {
+                return SubstNode.getHandler(env);
+            }
+            if (ExprListNode.isMatch(env.getInput().peep(2).getType())) {
+                return CallSubFuncNode.getHandler(env);
+            }
+            throw new Exception("Stmt:解析中に構文エラー");
+        case FOR:
+            return ForNode.getHandler(env);
+        case END:
+            return EndNode.getHandler(env);
+        default:
+            throw new Exception("Stmt:文の開始として不適切な型:" + env.getInput().peep(1).getType());
+		}
 	}
 
 	@Override
 	public boolean Parse() throws Exception {
-		LexicalUnit lu = env.getInput().get();
-		env.getInput().unget(lu);
+		throw new Exception("stmtNodeのParseは呼ばれません");
+	}
 
-		body = SubstNode.isMatch(env, lu);
-		if(body != null){
-			return body.Parse();
-		}
+	@Override
+	public String toString() {
+		// TODO 自動生成されたメソッド・スタブ
+		return "Stmt";
+	}
 
-		body = CallSubNode.isMatch(env, lu);
-		if(body != null){
-			return body.Parse();
-		}
-
-		if (lu.getType() == LexicalType.END) {
-			super.type = NodeType.END;
-			return true;
-		}
-
-		return false;
-
+	@Override
+	public Value getValue() throws Exception {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 
 }

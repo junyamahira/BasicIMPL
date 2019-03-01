@@ -22,7 +22,7 @@ public class ExprListNode extends Node {
 		return FIRST.contains(type);
 	}
 
-	private static Node getHandler(Environment env) {
+	public static Node getHandler(Environment env) {
 		return new ExprListNode(env);
 	}
 

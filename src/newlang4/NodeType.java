@@ -18,4 +18,5 @@ public enum NodeType {
     DOUBLE_CONSTANT,
     BOOL_CONSTANT,
     END,
+    VARIABLE, //?
 }

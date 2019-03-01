@@ -1,9 +1,7 @@
 package newlang5;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ProgramNode extends Node {
@@ -12,8 +10,8 @@ public class ProgramNode extends Node {
 			new HashSet<LexicalType>(Arrays.asList(LexicalType.IF,
 					LexicalType.WHILE, LexicalType.DO, LexicalType.NAME,
 					LexicalType.FOR, LexicalType.END));
-
-    List<Node> child = new ArrayList<Node>();
+	//???とりま放置
+    //List<Node> child = new ArrayList<Node>();
 
 	public ProgramNode(Environment env) {
 		super(env);
@@ -29,7 +27,8 @@ public class ProgramNode extends Node {
 	}
 
 	@Override
-	public String toString() {
-		return "program node";
+	public Value getValue() throws Exception {
+		// TODO 自動生成されたメソッド・スタブ
+		throw new Exception("Program:getValueはNG");
 	}
 }

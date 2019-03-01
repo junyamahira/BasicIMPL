@@ -10,11 +10,10 @@ public class CallSubFuncNode extends Node {
     String funcName;
     Node arguments;
 
-    public CallSubFuncNode(Environment env) {
-    	super(env);
-    	super.type = NodeType.FUNCTION_CALL;
-	}
-
+    private CallSubFuncNode(Environment env) {
+        super(env);
+        type = NodeType.FUNCTION_CALL;
+    }
 
     public static boolean isMatch(LexicalType type) {
         return FIRST.contains(type);
@@ -24,37 +23,38 @@ public class CallSubFuncNode extends Node {
         return new CallSubFuncNode(env);
     }
 
-    @Override
-    public boolean Parse() throws Exception {
+    public boolean parse() throws Exception {
     	boolean isBracket = false;
-    	LexicalType inType = env.getInput().peep(1).getType();
-    	funcName = env.getInput().get().getValue().getSValue();
+        funcName = env.getInput().get().getValue().getSValue();
 
-    	if (env.getInput().expect(LexicalType.LP)){
-    		isBracket = true;
-    		env.getInput().get();
-    	}
-
-    	if (ExprListNode.isMatch(inType)) {
-			arguments = ExprListNode.getHandler(env);
-			arguments.Parse();
-		}
+        if (env.getInput().expect(LexicalType.LP)) {
+            isBracket = true;
+            env.getInput().get();
+        }
+        if (ExprListNode.isMatch(env.getInput().peep(1).getType())) {
+            arguments = ExprListNode.getHandler(env);
+            arguments.Parse();
+        }
 
     	if (isBracket && env.getInput().expect(LexicalType.RP))
-    		throw new Exception("()が閉じられていません");
+    		throw new Exception("CallSub:()が閉じられていません");
     	else if (isBracket && env.getInput().expect(LexicalType.RP))
     		env.getInput().get();
 
-    	return true;
-    }
-
-    @Override
-    public String toString() {
-    	return "func: " + funcName + "(" + arguments + ")\n";
+        return true;
     }
 
     @Override
     public Value getValue() throws Exception {
-    	// TODO 自動生成されたメソッド・スタブ
-    	return super.getValue();
+        Function func = env.getFunction(funcName);
+        if (func == null) {
+            throw new Exception("CallSub:存在しない関数です");
+        }
+        ExprListNode arg = (ExprListNode) arguments;
+        return func.invoke(arg);
     }
+
+    public String toString() {
+        return "func: " + funcName + "(" + arguments + ")";
+    }
+}

@@ -31,4 +31,20 @@ public class Node {
     	else return "Node";
     }
 
+    //真似
+    protected void skipNL() {
+        if (env == null) {
+            return;
+        }
+        while (true) {
+            try {
+                if (env.getInput().expect(LexicalType.NL)) {
+                    env.getInput().get();
+                } else {
+                    break;
+                }
+            } catch (Exception e){/*何もしない*/};
+        }
+    }
+
 }

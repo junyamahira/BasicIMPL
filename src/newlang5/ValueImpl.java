@@ -2,61 +2,55 @@ package newlang5;
 
 public class ValueImpl implements Value {
 
-	ValueType type;
-	int ivalue;
-	double dvalue;
-	String svalue;
-	boolean bvalue;
+    private ValueType type;
+    private String value;
 
-	public ValueImpl(String src, ValueType targetType) {
-		this.type = targetType;
-		switch (targetType) {
-		case INTEGER:
-			ivalue = Integer.parseInt(src);
-			break;
-		case DOUBLE:
-			dvalue = Double.parseDouble(src);
-			break;
-		case STRING:
-			svalue = src;
-			break;
-		case BOOL:
-			bvalue = Boolean.valueOf(src);
-			break;
+    public ValueImpl(String s) {
+        type = ValueType.STRING;
+        value = s;
+    }
 
-		default:
-			break;
-		}
-	}
+    public ValueImpl(int i) {
+        type = ValueType.INTEGER;
+        value = i + "";
+    }
 
-	@Override
-	public String getSValue() {
-		// TODO 自動生成されたメソッド・スタブ
-		return svalue;
-	}
+    public ValueImpl(double d) {
+        type = ValueType.DOUBLE;
+        value = d + "";
+    }
 
-	@Override
-	public int getIValue() {
-		// TODO 自動生成されたメソッド・スタブ
-		return ivalue;
-	}
+    public ValueImpl(boolean b) {
+        type = ValueType.BOOL;
+        value = b + "";
+    }
 
-	@Override
-	public double getDValue() {
-		// TODO 自動生成されたメソッド・スタブ
-		return dvalue;
-	}
+    @Override
+    public String getSValue() {
+        return value;
+    }
 
-	@Override
-	public boolean getBValue() {
-		// TODO 自動生成されたメソッド・スタブ
-		return bvalue;
-	}
+    @Override
+    public int getIValue() {
+        return Integer.parseInt(value);
+    }
 
-	@Override
-	public ValueType getType() {
-		// TODO 自動生成されたメソッド・スタブ
-		return type;
-	}
+    @Override
+    public double getDValue() {
+        return Double.parseDouble(value);
+    }
 
+    @Override
+    public boolean getBValue() {
+        return Boolean.parseBoolean(value); //プリミティブ型を返すやつ
+    }
+
+    @Override
+    public ValueType getType() {
+        return type;
+    }
+
+    public String toString() {
+        return getSValue();
+    }
 }

@@ -1,21 +1,21 @@
 package newlang5;
 
 public interface Value {
-// À‘•‚·‚×‚«ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// å®Ÿè£…ã™ã¹ãã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //    public Value(String s);
 //    public Value(int i);
 //    public Value(double d);
 //    public Value(boolean b);
 //    public String get_sValue();
 	public String getSValue();
-	// ƒXƒgƒŠƒ“ƒOŒ^‚Å’l‚ğæ‚èo‚·B•K—v‚ª‚ ‚ê‚ÎAŒ^•ÏŠ·‚ğs‚¤B
+	// ã‚¹ãƒˆãƒªãƒ³ã‚°å‹ã§å€¤ã‚’å–ã‚Šå‡ºã™ã€‚å¿…è¦ãŒã‚ã‚Œã°ã€å‹å¤‰æ›ã‚’è¡Œã†ã€‚
     public int getIValue();
-    	// ®”Œ^‚Å’l‚ğæ‚èo‚·B•K—v‚ª‚ ‚ê‚ÎAŒ^•ÏŠ·‚ğs‚¤B
+    	// æ•´æ•°å‹ã§å€¤ã‚’å–ã‚Šå‡ºã™ã€‚å¿…è¦ãŒã‚ã‚Œã°ã€å‹å¤‰æ›ã‚’è¡Œã†ã€‚
     public double getDValue();
-    	// ¬”“_Œ^‚Å’l‚ğæ‚èo‚·B•K—v‚ª‚ ‚ê‚ÎAŒ^•ÏŠ·‚ğs‚¤B
+    	// å°æ•°ç‚¹å‹ã§å€¤ã‚’å–ã‚Šå‡ºã™ã€‚å¿…è¦ãŒã‚ã‚Œã°ã€å‹å¤‰æ›ã‚’è¡Œã†ã€‚
     public boolean getBValue();
-    	// ˜_—Œ^‚Å’l‚ğæ‚èo‚·B•K—v‚ª‚ ‚ê‚ÎAŒ^•ÏŠ·‚ğs‚¤B
+    	// è«–ç†å‹ã§å€¤ã‚’å–ã‚Šå‡ºã™ã€‚å¿…è¦ãŒã‚ã‚Œã°ã€å‹å¤‰æ›ã‚’è¡Œã†ã€‚
     public ValueType getType();
     public String toString();
-    	// getSValueij‚Æ“¯‚¶B•Ö—˜‚Ì‚½‚ßB
+    	// getSValueï¼ˆï¼‰ã¨åŒã˜ã€‚ä¾¿åˆ©ã®ãŸã‚ã€‚
 }

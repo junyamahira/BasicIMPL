@@ -1,5 +1,6 @@
 package funcs;
 
+import funcs.Function;
 import interpreter.Value;
 import interpreter.node.ExprListNode;
 
